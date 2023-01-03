@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>20230103-objectsMove-animation</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+    }
+
+    div{
+      width: 300px;
+      height: 100px;
+      margin: 20px 0;
+      background-color: royalblue;
+      border: 4px solid black;
+    }
+  </style>
+</head>
+<body>
+    <div ></div>
+    <div ></div>
+    <div ></div>
+    <div ></div>
+    <div ></div>
+
+    <script type="text/javascript">
+      window.onload = function (){
+      var allBoxs = document.getElementsByTagName('div');
+      for(var i = 0; i < allBoxs.length; i++){
+        allBoxs[i].onmouseover = function (){
+          startAnimation(this,600);
+        }
+        allBoxs[i].onmouseout = function (){
+          startAnimation(this,300);
+        }
+      }
+
+      function getStyle(obj,attr){
+        if(obj.currentStyle){
+          return obj.currentStyle[attr];
+        }else{
+          return getComputedStyle(obj,null)[attr];
+        }
+      }
+
+      var speed =0;
+      function startAnimation(obj,endTarget){
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function (){
+          var cur = parseInt(getStyle(obj,'width'));
+          speed = (endTarget - cur)/10;
+          speed = endTarget > cur ? Math.ceil(speed): Math.floor(speed);
+
+          if(endTarget === cur){
+            clearInterval(obj.timer);
+            return;
+          }
+          obj.style.width = cur + speed + 'px';
+        },30)
+      }
+    }
+
+  </script>
+
+</body>
+</html>
